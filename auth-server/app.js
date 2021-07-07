@@ -42,4 +42,18 @@ app.post('/login', function (request, response) {
     }
 });
 
+app.post('/register', function (request, response) {
+    var username = request.body.username;
+    var password = request.body.password;
+    if (username && password) {
+        connection.query('INSERT INTO accounts(username, password) VALUES(?, ?)', [username, password], function (error, results, fields) {
+            response.redirect('/login');
+            response.end();
+        });
+    } else {
+        response.send('Please enter Username and Password!');
+        response.end();
+    }
+});
+
 app.listen(3000);
